@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Espacio de Repaso - MOD IMPORTACIONES</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ficde-azul-dark: #134252;
+            --ficde-azul-light: #2c5c6e;
+            --ficde-naranja: #e68161;
+            --ficde-naranja-hover: #ff9f85;
+            --tarjeta-bg: #f0f4f5;
+            --input-bg: #e2e8eb;
+            --texto-principal: #0f2d38;
+            --texto-secundario: #4a636e;
+            --verde-exito: #2e7d32;
+            --verde-bg: #c8e6c9;
+            --rojo-error: #c62828;
+            --naranja-bg: #ffe0b2;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--ficde-azul-dark) 0%, #0a252e 100%);
+            min-height: 100vh;
+            color: var(--texto-principal);
+            padding: 20px;
+            background-attachment: fixed;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; }
+
+        header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 15px 30px;
+            border-radius: 16px;
+            margin-bottom: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .logo-img { height: 50px; width: auto; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); }
+
+        .module-tag {
+            background: var(--ficde-naranja);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .welcome-card {
+            background: var(--tarjeta-bg);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            border-bottom: 6px solid var(--ficde-naranja);
+            margin-bottom: 30px;
+        }
+
+        .welcome-title {
+            color: var(--ficde-azul-dark);
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+
+        .fede-avatar-large {
+            width: 140px; height: 140px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            background: var(--ficde-naranja);
+            padding: 5px;
+            box-shadow: 0 10px 25px rgba(230, 129, 97, 0.5);
+            cursor: pointer;
+            transition: transform 0.3s;
+            overflow: hidden;
+        }
+
+        .fede-avatar-large:hover { transform: scale(1.1); }
+
+        .fede-avatar-large img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid white;
+        }
+
+        .blocks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .block-card {
+            background: var(--tarjeta-bg);
+            padding: 30px;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            border: 2px solid transparent;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .block-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--ficde-naranja);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .block-icon {
+            font-size: 3rem; margin-bottom: 15px;
+            background: rgba(19, 66, 82, 0.1);
+            width: 70px; height: 70px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 50%; color: var(--ficde-azul-dark);
+        }
+
+        .block-title { color: var(--ficde-azul-dark); font-size: 1.3rem; font-weight: 700; margin-bottom: 10px; }
+
+        .block-desc { 
+            color: var(--texto-secundario); 
+            font-size: 0.9rem; 
+            line-height: 1.5; 
+            word-wrap: break-word;
+            word-break: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .activity-screen {
+            display: none;
+            grid-template-columns: 280px 1fr;
+            gap: 25px;
+            align-items: start;
+        }
+
+        .activity-screen.active { display: grid; }
+
+        .tutor-sidebar {
+            background: var(--ficde-azul-light);
+            padding: 30px;
+            border-radius: 16px;
+            text-align: center;
+            color: white;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            position: sticky; top: 20px;
+        }
+
+        .tutor-bubble {
+            background: rgba(255,255,255,0.95);
+            padding: 20px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            color: var(--ficde-azul-dark);
+            margin-top: 20px;
+            position: relative;
+            text-align: left;
+            word-wrap: break-word;
+            word-break: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .tutor-bubble::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            border-width: 0 10px 10px;
+            border-style: solid;
+            border-color: transparent transparent rgba(255,255,255,0.95);
+            transform: translateX(-50%);
+        }
+
+        .activity-content {
+            background: var(--tarjeta-bg);
+            padding: 40px;
+            border-radius: 16px;
+            min-height: 500px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .act-badge {
+            background: var(--ficde-naranja);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .act-title { font-size: 1.8rem; color: var(--ficde-azul-dark); margin: 15px 0; font-weight: 800; }
+
+        .act-instruction { 
+            font-size: 1.1rem; 
+            color: var(--texto-secundario); 
+            margin-bottom: 30px; 
+            word-wrap: break-word;
+            word-break: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .student-input {
+            width: 100%;
+            height: 150px;
+            padding: 20px;
+            background: var(--input-bg);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            color: var(--ficde-azul-dark);
+            transition: all 0.3s;
+        }
+
+        .student-input:focus { background: white; border-color: var(--ficde-naranja); outline: none; }
+
+        .fill-input {
+            border: none;
+            border-bottom: 2px solid var(--ficde-naranja);
+            background: transparent;
+            font-weight: 700;
+            color: var(--ficde-azul-dark);
+            text-align: center;
+            width: 150px;
+            font-size: 1.1rem;
+        }
+
+        .btn-action {
+            width: 100%;
+            padding: 18px;
+            margin-top: 30px;
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            background: linear-gradient(90deg, var(--ficde-naranja), #ff9f85);
+            color: white;
+            box-shadow: 0 6px 20px rgba(230, 129, 97, 0.4);
+            transition: transform 0.2s;
+        }
+
+        .btn-action:hover { transform: translateY(-3px); }
+
+        .btn-back {
+            background: transparent;
+            color: var(--texto-secundario);
+            box-shadow: none;
+            border: 2px solid #ccc;
+            margin-top: 15px;
+        }
+
+        .btn-back:hover { background: #e0e0e0; color: var(--ficde-azul-dark); }
+
+        .traffic-row, .checklist-item {
+            background: white;
+            margin-bottom: 12px;
+            padding: 15px 20px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .traffic-row:hover, .checklist-item:hover { border-color: var(--ficde-naranja); transform: translateX(5px); }
+
+        .traffic-btn {
+            width: 35px; height: 35px;
+            border-radius: 50%; border: 2px solid #ddd;
+            cursor: pointer;
+            opacity: 0.3;
+        }
+
+        .traffic-btn.active { opacity: 1; transform: scale(1.2); border-color: var(--ficde-azul-dark); }
+
+        .bg-green { background: #4CAF50; }
+
+        .bg-yellow { background: #FFC107; }
+
+        .bg-red { background: #f44336; }
+
+        .check-box {
+            width: 24px; height: 24px;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+
+        .checklist-item.selected { border-color: var(--ficde-naranja); background: #fff5f0; }
+
+        .checklist-item.selected .check-box { background: var(--ficde-naranja); border-color: var(--ficde-naranja); color: white; }
+
+        .feedback-area {
+            margin-top: 30px;
+            padding: 25px;
+            border-radius: 12px;
+            display: none;
+            animation: slideUp 0.4s;
+        }
+
+        .feedback-success { background: var(--verde-bg); color: #1b5e20; border-left: 6px solid var(--verde-exito); }
+
+        .feedback-retry { background: var(--naranja-bg); color: #bf360c; border-left: 6px solid #ef6c00; }
+
+        .feedback-fail { background: #cfd8dc; color: #37474f; border-left: 6px solid #455a64; }
+
+        #musicToggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--ficde-naranja);
+            color: white;
+            border: none;
+            cursor: pointer;
+            z-index: 100;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .activity-screen { grid-template-columns: 1fr; }
+            .tutor-sidebar { display: flex; align-items: center; gap: 20px; }
+            .fede-avatar-large { width: 80px; height: 80px; }
+            .tutor-bubble::after { display: none; }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- AUDIOS MP3 -->
+    <audio id="bgMusic" loop preload="auto">
+        <source src="chill-study-desk-focus-concentration-lofi-451180.mp3" type="audio/mpeg">
+    </audio>
+
+    <audio id="saludoInicial" preload="auto" src="saludoinicial.mp3"></audio>
+    <audio id="mensaje1Ejercicios" preload="auto" src="mensaje1ejercicios.mp3"></audio>
+    <audio id="mensaje2Ejercicios" preload="auto" src="mensaje2ejercicios.mp3"></audio>
+    <audio id="mensaje3Ejercicios" preload="auto" src="mensaje3ejercicios.mp3"></audio>
+    <audio id="mensaje4Ejercicios" preload="auto" src="mensaje4ejercicios.mp3"></audio>
+    <audio id="respuestaCorrecta" preload="auto" src="respuestacorrecta.mp3"></audio>
+    <audio id="primerError" preload="auto" src="primererror.mp3"></audio>
+    <audio id="segundoError" preload="auto" src="segundoerror.mp3"></audio>
+    <audio id="loLograste" preload="auto" src="lolograste.mp3"></audio>
+
+    <audio id="hoverSound" preload="auto" src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.m4a"></audio>
+    <audio id="clickSound" preload="auto" src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.m4a"></audio>
+    <audio id="successSound" preload="auto" src="https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.m4a"></audio>
+
+    <button id="musicToggle" onclick="toggleMusic()">🔇</button>
+
+    <div class="container">
+        <header>
+            <div class="logo-container">
+                <img src="logo.png" alt="FICDE" class="logo-img" onerror="this.style.display='none'; document.getElementById('altLogo').style.display='block'">
+                <h2 id="altLogo" style="display:none; color:white; font-weight:800;">FICDE</h2>
+            </div>
+            <div class="module-tag">Módulo: IMPORTACIONES</div>
+        </header>
+
+        <div id="selectionScreen">
+            <div class="welcome-card">
+                <div class="fede-avatar-large" onclick="playAudio('saludoInicial')">
+                    <img src="personaje.gif" alt="Fede">
+                </div>
+                <h1 class="welcome-title">Espacio de Repaso Interactivo</h1>
+                <p style="color: var(--texto-secundario); font-size: 1.1rem;">Donde el conocimiento se convierte en acción</p>
+            </div>
+
+            <div class="blocks-grid">
+                <div class="block-card" onclick="startModule('sintesis')">
+                    <div class="block-icon">🧠</div>
+                    <div class="block-title">Síntesis</div>
+                    <div class="block-desc">Concepto de importación, tipos de destinaciones, clasificación de importadores, secuencia operativa, documentos comerciales y de transporte, y canales de control aduanero.</div>
+                </div>
+
+                <div class="block-card" onclick="startModule('analisis')">
+                    <div class="block-icon">🔍</div>
+                    <div class="block-title">Análisis Crítico</div>
+                    <div class="block-desc">Riesgos en la selección de proveedores, impacto de los Incoterms, desafíos de las importaciones suspensivas, errores documentales y seguridad en el pago.</div>
+                </div>
+
+                <div class="block-card" onclick="startModule('escenarios')">
+                    <div class="block-icon">🎬</div>
+                    <div class="block-title">Escenarios</div>
+                    <div class="block-desc">Proceso de importación paso a paso, selección de transporte, gestión de tributos con certificado de origen y coordinación de llegada.</div>
+                </div>
+
+                <div class="block-card" onclick="startModule('practica')">
+                    <div class="block-icon">⚡</div>
+                    <div class="block-title">Práctica</div>
+                    <div class="block-desc">Uso de sistemas digitales, kit documental de despacho, pasos de oficialización y flujo de ventanilla única.</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="activityScreen" class="activity-screen">
+            <div class="tutor-sidebar">
+                <div class="fede-avatar-large" style="width: 100px; height: 100px; border-color: var(--ficde-naranja);" onclick="replayTutorMessage()">
+                    <img src="personaje.gif" alt="Fede">
+                </div>
+                <div style="flex:1;">
+                    <h3 style="color:var(--ficde-naranja); margin-bottom:5px;">Tutor Fede</h3>
+                    <div class="tutor-bubble" id="tutorMessage"></div>
+                </div>
+            </div>
+
+            <div class="activity-content" id="activityContainer"></div>
+        </div>
+    </div>
+
+    <script>
+        // ===== GESTIÓN DE AUDIO MP3 =====
+        const audioFiles = {
+            saludoInicial: document.getElementById('saludoInicial'),
+            mensaje1: document.getElementById('mensaje1Ejercicios'),
+            mensaje2: document.getElementById('mensaje2Ejercicios'),
+            mensaje3: document.getElementById('mensaje3Ejercicios'),
+            mensaje4: document.getElementById('mensaje4Ejercicios'),
+            correcto: document.getElementById('respuestaCorrecta'),
+            error1: document.getElementById('primerError'),
+            error2: document.getElementById('segundoError'),
+            lolograste: document.getElementById('loLograste')
+        };
+
+        function playAudio(audioKey) {
+            if (audioFiles[audioKey]) {
+                audioFiles[audioKey].currentTime = 0;
+                audioFiles[audioKey].play().catch(err => console.log('Error al reproducir audio:', err));
+            }
+        }
+
+        const bgMusic = document.getElementById('bgMusic');
+        const clickSoundEl = document.getElementById('clickSound');
+        const successSoundEl = document.getElementById('successSound');
+        const hoverSoundEl = document.getElementById('hoverSound');
+
+        let musicOn = false;
+        let audioUnlocked = false;
+
+        function unlockAudio() {
+            if (audioUnlocked) return;
+            Object.values(audioFiles).forEach(a => {
+                a.volume = 0;
+                const p = a.play();
+                if (p) p.then(() => { a.pause(); a.currentTime = 0; a.volume = 1; }).catch(()=>{});
+            });
+            audioUnlocked = true;
+        }
+
+        document.addEventListener('pointerdown', unlockAudio, { once: true });
+        document.addEventListener('keydown', unlockAudio, { once: true });
+
+        function toggleMusic() {
+            unlockAudio();
+            if (!musicOn) {
+                bgMusic.volume = 0.1;
+                bgMusic.play().catch(() => {});
+                document.getElementById('musicToggle').innerText = '🎵';
+            } else {
+                bgMusic.pause();
+                document.getElementById('musicToggle').innerText = '🔇';
+            }
+            musicOn = !musicOn;
+        }
+
+        function playSound(type) {
+            if (!audioUnlocked) return;
+            try {
+                if (type === 'click') { clickSoundEl.currentTime=0; clickSoundEl.volume=0.8; clickSoundEl.play().catch(()=>{}); }
+                if (type === 'success') { successSoundEl.currentTime=0; successSoundEl.volume=0.8; successSoundEl.play().catch(()=>{}); }
+                if (type === 'hover') { hoverSoundEl.currentTime=0; hoverSoundEl.volume=0.2; hoverSoundEl.play().catch(()=>{}); }
+            } catch (e) {}
+        }
+
+        function wireUiSounds() {
+            document.querySelectorAll('.block-card, .btn-action, .checklist-item, .traffic-row, .fede-avatar-large').forEach(el => {
+                if (el.dataset.sound === '1') return;
+                el.dataset.sound = '1';
+                el.addEventListener('mouseenter', () => playSound('hover'));
+                el.addEventListener('click', () => playSound('click'));
+            });
+        }
+
+        window.addEventListener('load', wireUiSounds);
+
+        // ===== NORMALIZACIÓN DE TEXTO =====
+        function normalizar(txt) {
+            return txt.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        }
+
+        // ===== ACTIVIDADES =====
+        const modules = {
+            sintesis: [
+                {
+                    type: 'text',
+                    badge: 'fundamentos del comercio exterior',
+                    title: 'concepto de importación',
+                    instruction: 'explica el concepto de importación desde la perspectiva técnica y menciona por qué se considera que los servicios también deben incluirse en esta definición.',
+                    tutor: 'analiza la introducción de bienes a una zona aduanera y cómo la visión moderna amplía este concepto,.',
+                    explanation: 'la importación es la introducción de mercadería a un territorio aduanero, aunque técnicamente el concepto abarca también la contratación de servicios del exterior,.',
+                    validation: (raw) => {
+                        const v = normalizar(raw);
+                        const roots = ['importac', 'introducc', 'mercader', 'territor', 'aduaner', 'tecnicament', 'concept', 'abarc', 'contratac', 'servici'];
+                        return roots.filter(r => v.includes(r)).length >= 5;
+                    }
+                },
+                {
+                    type: 'text',
+                    badge: 'regímenes aduaneros',
+                    title: 'importaciones definitivas vs suspensivas',
+                    instruction: 'describe la diferencia principal entre una importación para consumo y una importación temporal o suspensiva.',
+                    tutor: 'piensa en el tiempo que la mercadería puede quedarse en el país y si debe pagar impuestos al ingresar,.',
+                    explanation: 'las importaciones definitivas permanecen por tiempo indefinido y tienen libre tránsito, mientras que las suspensivas tienen un plazo definido y movilidad restringida,.',
+                    validation: (raw) => {
+                        const v = normalizar(raw);
+                        const roots = ['definitiv', 'permane', 'tiemp', 'indefinid', 'libr', 'transit', 'suspensiv', 'plaz', 'definid', 'restringid'];
+                        return roots.filter(r => v.includes(r)).length >= 5;
+                    }
+                },
+                {
+                    type: 'checklist',
+                    badge: 'perfiles de negocio',
+                    title: 'clasificación de los importadores',
+                    instruction: 'identifica las categorías de importadores según la frecuencia de sus operaciones anuales mencionadas en las fuentes.',
+                    items: [
+                        { text: 'Importador habitual', correct: true },
+                        { text: 'Importador ocasional o casual', correct: true },
+                        { text: 'Importador de servicios único', correct: false },
+                        { text: 'Importador estatal permanente', correct: false }
+                    ].sort(() => Math.random() - 0.5),
+                    tutor: 'busca la distinción entre quienes tienen habilitación para varias cargas y quienes solo pueden realizar una al año,.',
+                    explanation: 'el sistema distingue entre el importador habitual (varias operaciones) y el ocasional (una sola operación anual autorizada),.'
+                },
+                {
+                    type: 'text',
+                    badge: 'inicio de la operación',
+                    title: 'la factura proforma',
+                    instruction: 'detalla la función de la factura proforma y menciona al menos cuatro datos recomendables que debe contener.',
+                    tutor: 'considera este documento como el reflejo de la propuesta comercial aceptada antes de la factura definitiva,.',
+                    explanation: 'la proforma plasma detalles de la cotización aprobada, incluyendo datos del exportador, descripción de mercaderías, Incoterms y plazos de entrega.',
+                    validation: (raw) => {
+                        const v = normalizar(raw);
+                        const roots = ['proform', 'plasm', 'detall', 'cotizac', 'aprobad', 'exportador', 'descripci', 'mercader', 'incoterm', 'plaz'];
+                        return roots.filter(r => v.includes(r)).length >= 5;
+                    }
+                },
+                {
+                    type: 'blanks',
+                    anyOrder: false,
+                    badge: 'gestión de carga',
+                    title: 'la lista de empaque',
+                    instruction: 'Completar la frase<br><br>la lista de empaque proporciona datos sobre ___ y ___, siendo fundamental para que el transportista pueda ___ la carga.',
+                    blanks: ['pesos', 'medidas', 'estibar'],
+                    tutor: 'reflexiona sobre la utilidad técnica de este documento para el despacho y el transporte físico,.',
+                    explanation: 'este documento permite obtener pesos y medidas precisas para la oficialización del despacho y la correcta estiba de la mercadería,.'
+                },
+                {
+                    type: 'text',
+                    badge: 'beneficios arancelarios',
+                    title: 'certificado de origen',
+                    instruction: 'explica la importancia del certificado de origen en una importación y cómo puede afectar el pago de tributos.',
+                    tutor: 'piensa en los convenios entre países y qué sucede con las alícuotas cuando se demuestra la procedencia,.',
+                    explanation: 'el certificado da fe del origen de la carga y, mediante acuerdos internacionales, permite disminuir o eliminar la suma de tributos a pagar,.',
+                    validation: (raw) => {
+                        const v = normalizar(raw);
+                        const roots = ['certificad', 'origen', 'carg', 'acuerd', 'internacional', 'permit', 'disminu', 'elimin', 'sum', 'tribut'];
+                        return roots.filter(r => v.includes(r)).length >= 5;
+                    }
+                },
+                {
+                    type: 'checklist',
+                    badge: 'logística internacional',
+                    title: 'documentos según el medio de transporte',
+                    instruction: 'selecciona el documento de transporte correcto para cada modalidad.',
+                    items: [
+                        { text: 'Conocimiento de Embarque (Marítimo)', correct: true },
+                        { text: 'Carta de Porte (Terrestre)', correct: true },
+                        { text: 'Guía Aérea (Aéreo)', correct: true },
+                        { text: 'Factura Comercial (Multimodal)', correct: false }
+                    ].sort(() => Math.random() - 0.5),
+                    tutor: 'asocia cada soporte físico de transporte con su contrato de flete correspondiente,.',
+                    explanation: 'según el modo elegido, se utiliza el Bill of Lading (marítimo), la Carta de Porte (terrestre) o la Guía Aérea (aéreo),.'
+                },
+                {
+                    type: 'text',
+                    badge: 'formalización aduanera',
+                    title: 'el despacho de importación',
+                    instruction: 'define qué es el despacho de importación y qué documentos se utilizan como base para su confección.',
+                    tutor: 'visualízalo como el documento que vuelca toda la información comercial y de transporte en el sistema oficial.',
+                    explanation: 'es el documento aduanero que refleja fielmente los datos de la factura, lista de empaque y transporte para oficializar la operación.',
+                    validation: (raw) => {
+                        const v = normalizar(raw);
+                        const roots = ['document', 'aduaner', 'reflej', 'fielment', 'dat', 'factur', 'empaqu', 'transport', 'oficializ', 'operaci'];
+                        return roots.filter(r => v.includes(r)).length >= 5;
+                    }
+                },
+                {
+                    type: 'traffic',
+                    badge: 'control de aduanas',
+                    title: 'los canales de verificación',
+                    instruction: 'Marca afirmaciones correctas sobre los canales de control asignados aleatoriamente.',
+                    items: [
+                        { text: 'El canal verde implica solo inspección documental sin verificar mercadería.', color: 'green' },
+                        { text: 'El canal naranja incluye inspección documental y verificación física obligatoria.', color: 'red' },
+                        { text: 'El canal rojo requiere inspección documental y verificación física de la mercadería.', color: 'green' },
+                        { text: 'El sistema asigna el canal basándose exclusivamente en el monto de la operación.', color: 'red' }
+                    ].sort(() => Math.random() - 0.5),
+                    tutor: 'la asignación de canales es aleatoria y determina el nivel de exhaustividad en el control de la carga,,.',
+                    explanation: 'la aduana aplica controles documentales en verde y naranja, sumando la verificación física solo en el canal rojo,.'
+                },
+                {
+                    type: 'text',
+                    badge: 'tecnología aplicada',
+                    title: 'sistemas de gestión aduanera',
+                    instruction: 'resume los beneficios de utilizar un sistema informático interconectado para las operaciones de importación.',
+                    tutor: 'analiza cómo se enlazan los distintos actores (importadores, bancos, aduanas) para simplificar procesos,.',
+                    explanation: 'la automatización mediante sistemas informáticos proporciona agilidad y simplificación en los procedimientos de todos los usuarios vinculados.',
+                    validation: (raw) => {
+                        const v = normalizar(raw);
+                        const roots = ['automatizac', 'sistem', 'informatic', 'proporcion', 'agilidad', 'simplificac', 'procedimient', 'usuari', 'vinculad'];
+                        return roots.filter(r => v.includes(r)).length >= 5;
+                    }
+                }
+            ],
+            analisis: [
+                {
+                    type: 'text',
+                    badge: 'debilidades en el origen',
+                    title: 'riesgos de la búsqueda de proveedor',
+                    instruction: 'analiza por qué el precio no debe ser el único factor decisivo al elegir un proveedor en el exterior.',
+                    tutor: 'considera los costos ocultos como transporte, seguros y la necesidad de verificar la calidad antes del envío,.',
+                    explanation: 'es crítico calcular todos los gastos involucrados e inspeccionar la mercadería para evitar fraudes o errores de calidad por la distancia,.',
+                    validation: (raw) => {
+                        const v = normalizar(raw);
+                        const roots = ['critic', 'calcul', 'gast', 'involucrad', 'inspeccion', 'mercader', 'evit', 'fraud', 'error', 'distanc'];
+                        return roots.filter(r => v.includes(r)).length >= 5;
+                    }
+                },
+                {
+                    type: 'text',
+                    badge: 'fallas estratégicas',
+                    title: 'impacto de una mala elección de Incoterms',
+                    instruction: 'evalúa cómo la elección de un Incoterm inadecuado puede afectar el costo y la responsabilidad de la operación.',
+                    tutor: 'piensa en quién asume los gastos operativos y aduaneros tanto en origen como en destino,.',
+                    explanation: 'un Incoterm mal negociado puede cargar al importador con costos operativos y riesgos de seguro no previstos inicialmente,.',
+                    validation: (raw) => {
+                        const v = normalizar(raw);
+                        const roots = ['incoterm', 'negociad', 'carg', 'importador', 'cost', 'operativ', 'riesg', 'segur', 'previst', 'inicialment'];
+                        return roots.filter(r => v.includes(r)).length >= 5;
+                    }
+                },
+                {
+                    type: 'checklist',
+                    badge: 'riesgos operativos',
+                    title: 'debilidades del régimen suspensivo',
+                    instruction: 'identifica los desafíos o riesgos que asume una empresa al operar bajo la modalidad de importación suspensiva.',
+                    items: [
+                        { text: 'Necesidad de garantizar tributos', correct: true },
+                        { text: 'Movilidad restringida de la carga', correct: true },
+                        { text: 'Pago inmediato de impuestos', correct: false },
+                        { text: 'Obligación de informar movimientos', correct: true }
+                    ].sort(() => Math.random() - 0.5),
+                    tutor: 'busca las limitaciones que impone la aduana al no haber cobrado aún los impuestos de esa mercadería.',
+                    explanation: 'las importaciones suspensivas exigen seguros de caución y mantienen una vigilancia estricta sobre cualquier movimiento del bien.'
+                },
+                {
+                    type: 'text',
+                    badge: 'inconsistencias documentales',
+                    title: 'discrepancias en la factura comercial',
+                    instruction: 'explica las consecuencias de que la factura comercial presente errores en la descripción de la mercadería o en la posición arancelaria.',
+                    tutor: 'recuerda que este documento debe ajustarse a los requisitos de la autoridad aduanera para evitar bloqueos,.',
+                    explanation: 'los errores en la factura impiden una correcta oficialización del despacho y pueden generar sanciones por mala declaración,.',
+                    validation: (raw) => {
+                        const v = normalizar(raw);
+                        const roots = ['error', 'factur', 'impid', 'correct', 'oficializac', 'despach', 'gener', 'sancion', 'declarac'];
+                        return roots.filter(r => v.includes(r)).length >= 5;
+                    }
+                },
+                {
+                    type: 'blanks',
+                    anyOrder: false,
+                    badge: 'seguridad financiera',
+                    title: 'gestión del pago internacional',
+                    instruction: 'Completar la frase<br><br>el pago de la mercadería puede realizarse de forma ___, a la ___ o a ___, dependiendo del instrumento seleccionado.',
+                    blanks: ['anticipada', 'vista', 'plazo'],
+                    tutor: 'reflexiona sobre cuándo sale el dinero del país respecto al momento del embarque.',
+                    explanation: 'la negociación del pago determina si los fondos se giran antes, durante o después del proceso de embarque.'
+                },
+                {
+                    type: 'text',
+                    badge: 'barreras técnicas',
+                    title: 'falta de muestras aprobadas',
+                    instruction: 'analiza el riesgo de confeccionar un contrato de compraventa sin haber aprobado previamente una muestra del producto.',
+                    tutor: 'considera qué sucede si el producto masivo no cumple con las expectativas técnicas una vez arribado,.',
+                    explanation: 'omitir la aprobación de muestras eleva el riesgo de recibir mercadería no apta, dificultando las gestiones de garantía o devolución,.',
+                    validation: (raw) => {
+                        const v = normalizar(raw);
+                        const roots = ['omit', 'aprobac', 'muestr', 'elev', 'riesg', 'recib', 'mercader', 'apta', 'dificult', 'garanti'];
+                        return roots.filter(r => v.includes(r)).length >= 5;
+                    }
+                },
+                {
+                    type: 'checklist',
+                    badge: 'ineficiencia logística',
+                    title: 'problemas en la lista de empaque',
+                    instruction: 'selecciona los problemas que genera una lista de empaque incompleta o inexacta según las fuentes.',
+                    items: [
+                        { text: 'Errores en la estiba de carga', correct: true },
+                        { text: 'Dificultad para oficializar el despacho', correct: true },
+                        { text: 'Imposibilidad de contratar seguros', correct: false },
+                        { text: 'Retrasos en el flete interno', correct: true }
+                    ].sort(() => Math.random() - 0.5),
+                    tutor: 'busca cómo este documento afecta tanto al transportista como al despachante de aduana,.',
+                    explanation: 'la falta de datos precisos en la lista de empaque entorpece la carga física y la gestión documental ante la aduana,.'
+                },
+                {
+                    type: 'text',
+                    badge: 'control de confianza',
+                    title: 'inspección pre-embarque',
+                    instruction: 'juzga la importancia de contar con personal de confianza en el exterior para inspeccionar la carga.',
+                    tutor: 'piensa en la dificultad de resolver problemas una vez que el contenedor ya está en tránsito internacional.',
+                    explanation: 'realizar inspecciones previas consolida la confianza y asegura que lo despachado coincida con lo pactado comercialmente.',
+                    validation: (raw) => {
+                        const v = normalizar(raw);
+                        const roots = ['realiz', 'inspeccion', 'previ', 'consolid', 'confianz', 'asegur', 'despachad', 'coincid', 'pactad', 'comercialment'];
+                        return roots.filter(r => v.includes(r)).length >= 5;
+                    }
+                },
+                {
+                    type: 'traffic',
+                    badge: 'alertas de canal',
+                    title: 'demoras por canal rojo',
+                    instruction: 'Marca situaciones críticas relacionadas con la asignación del canal de verificación rojo.',
+                    items: [
+                        { text: 'El canal rojo acelera el proceso de liberación al ser el color de urgencia.', color: 'red' },
+                        { text: 'Requiere que el personal de aduanas abra físicamente los bultos para controlarlos.', color: 'green' },
+                        { text: 'La mercadería puede sufrir daños durante la manipulación por verificación física.', color: 'green' },
+                        { text: 'No es necesario que el despacho coincida con la mercadería en este canal.', color: 'red' }
+                    ].sort(() => Math.random() - 0.5),
+                    tutor: 'el canal rojo es el más exhaustivo y requiere una coincidencia total entre lo declarado y lo hallado físicamente,.',
+                    explanation: 'el canal rojo aumenta los tiempos operativos y el riesgo de manipulación de la mercadería por la inspección física.'
+                },
+                {
+                    type: 'text',
+                    badge: 'integridad operativa',
+                    title: 'el despacho y el sistema de fondos',
+                    instruction: 'analiza el impacto de no contar con depósitos previos en la cuenta del sistema informático aduanero.',
+                    tutor: 'recuerda el requisito financiero antes de poder generar el documento aduanero final.',
+                    explanation: 'la falta de fondos depositados impide oficializar el despacho, retrasando el pago de tributos y la liberación de la carga.',
+                    validation: (raw) => {
+                        const v = normalizar(raw);
+                        const roots = ['falt', 'fond', 'depositad', 'impid', 'oficializ', 'despach', 'retras', 'pag', 'tribut', 'liberac'];
+                        return roots.filter(r => v.includes(r)).length >= 5;
+                    }
+                }
+            ],
+            escenarios: [
+                {
+                    type: 'text',
+                    badge: 'expansión de negocio',
+                    title: 'primera importación de electrónicos',
+                    instruction: 'relata los pasos iniciales que debe tomar una empresa que desea importar cargadores de celular por primera vez.',
+                    tutor: 'empieza por la búsqueda técnica y termina con el cálculo de todos los gastos involucrados,.',
+                    explanation: 'se inicia con la búsqueda de proveedores y el pedido de cotizaciones que incluyan todos los costos hasta el destino,.',
+                    validation: (raw) => {
+                        const v = normalizar(raw);
+                        const roots = ['inici', 'busqued', 'proveedor', 'pedid', 'cotizac', 'incluy', 'cost', 'destin'];
+                        return roots.filter(r => v.includes(r)).length >= 5;
+                    }
+                },
+                {
+                    type: 'traffic',
+                    badge: 'logística de urgencia',
+                    title: 'repuestos para maquinaria pesada',
+                    instruction: 'Marca afirmaciones correctas para un importador que necesita recibir un repuesto crítico en menos de 72 horas.',
+                    items: [
+                        { text: 'El transporte marítimo es la opción más viable por su bajo costo.', color: 'red' },
+                        { text: 'Se debe solicitar una Guía Aérea para este envío.', color: 'green' },
+                        { text: 'El transporte aéreo es ideal para mercaderías de poco volumen y mucha urgencia.', color: 'green' },
+                        { text: 'En este escenario no es necesario realizar un despacho de importación.', color: 'red' }
+                    ].sort(() => Math.random() - 0.5),
+                    tutor: 'la urgencia determina la elección del modo de transporte más allá del costo del flete,.',
+                    explanation: 'para repuestos urgentes se debe utilizar el transporte aéreo mediante una guía aérea para agilizar el arribo.'
+                },
+                {
+                    type: 'text',
+                    badge: 'optimización de costos',
+                    title: 'uso de acuerdos comerciales',
+                    instruction: 'propone un escenario donde una empresa aprovecha un acuerdo entre países para importar materias primas sin pagar aranceles.',
+                    tutor: 'enfócate en el documento que debe enviar el exportador una vez embarcada la mercadería,.',
+                    explanation: 'al presentar el certificado de origen, la empresa puede desgravar alícuotas y reducir los tributos a cero.',
+                    validation: (raw) => {
+                        const v = normalizar(raw);
+                        const roots = ['present', 'certificad', 'origen', 'empres', 'desgrav', 'alicuot', 'reduc', 'tribut', 'cer'];
+                        return roots.filter(r => v.includes(r)).length >= 5;
+                    }
+                },
+                {
+                    type: 'checklist',
+                    badge: 'flujo documental',
+                    title: 'aprobación de la factura proforma',
+                    instruction: 'una empresa recibe una proforma del exterior. Selecciona los pasos para formalizar el compromiso de compra.',
+                    items: [
+                        { text: 'Verificar precios y descripciones', correct: true },
+                        { text: 'Firmar el documento ambas partes', correct: true },
+                        { text: 'Pagar el 100% sin revisar', correct: false },
+                        { text: 'Validar los Incoterms propuestos', correct: true }
+                    ].sort(() => Math.random() - 0.5),
+                    tutor: 'busca las acciones que aseguran que el compromiso sea mutuo y transparente,.',
+                    explanation: 'revisar y firmar la proforma garantiza que ambas partes acepten las condiciones generales de la importación,.'
+                },
+                {
+                    type: 'text',
+                    badge: 'contingencia en aduanas',
+                    title: 'respuesta ante canal naranja',
+                    instruction: 'describe qué sucede con la mercadería de una empresa cuando el sistema asigna canal naranja a su despacho.',
+                    tutor: 'aclara si el inspector de aduanas abrirá o no los bultos en este caso específico.',
+                    explanation: 'se realiza una inspección documental exhaustiva, pero la mercadería no se verifica físicamente en este canal.',
+                    validation: (raw) => {
+                        const v = normalizar(raw);
+                        const roots = ['realiz', 'inspeccion', 'documental', 'exhaustiv', 'mercader', 'verific', 'fisicament', 'canal'];
+                        return roots.filter(r => v.includes(r)).length >= 5;
+                    }
+                },
+                {
+                    type: 'traffic',
+                    badge: 'gestión de transporte',
+                    title: 'fletes cruzados en el exterior',
+                    instruction: 'Marca acciones correctas cuando el transporte elegido no tiene oficina en el país de destino.',
+                    items: [
+                        { text: 'La mercadería se detiene en la frontera hasta que el importador la retire.', color: 'red' },
+                        { text: 'El transportista debe trabajar con una empresa colega local para la gestión.', color: 'green' },
+                        { text: 'Se selecciona un agente que gestione el flete en países de tránsito.', color: 'green' },
+                        { text: 'La operación se cancela automáticamente por falta de representación legal.', color: 'red' }
+                    ].sort(() => Math.random() - 0.5),
+                    tutor: 'la interconexión entre empresas de transporte asegura que la carga llegue a destino a través de socios locales,.',
+                    explanation: 'las empresas de transporte utilizan redes de colegas para completar tramos donde no poseen oficinas propias.'
+                },
+                {
+                    type: 'text',
+                    badge: 'producción nacional',
+                    title: 'materia prima en régimen suspensivo',
+                    instruction: 'relata cómo una fábrica utiliza el régimen de importación temporal para producir bienes destinados al extranjero.',
+                    tutor: 'sigue el camino desde el ingreso de la materia prima sin tributar hasta la liberación del seguro,.',
+                    explanation: 'la materia prima ingresa bajo fianza, se transforma en un nuevo producto y, al exportarse, se levanta la caución.',
+                    validation: (raw) => {
+                        const v = normalizar(raw);
+                        const roots = ['materi', 'prim', 'ingres', 'fianz', 'transform', 'nuev', 'product', 'export', 'levant', 'caucion'];
+                        return roots.filter(r => v.includes(r)).length >= 5;
+                    }
+                },
+                {
+                    type: 'checklist',
+                    badge: 'arribo a puerto',
+                    title: 'tareas de liberación de carga',
+                    instruction: 'la mercadería ha llegado a la zona primaria. Identifica las tareas que el importador coordina con su despachante.',
+                    items: [
+                        { text: 'Pago de tributos', correct: true },
+                        { text: 'Controles técnicos', correct: true },
+                        { text: 'Envío de cotizaciones nuevas', correct: false },
+                        { text: 'Coordinación de transporte interno', correct: true }
+                    ].sort(() => Math.random() - 0.5),
+                    tutor: 'busca las actividades finales necesarias para liberar el embarque y llevarlo al depósito.',
+                    explanation: 'tras el arribo, se deben cumplir las reglamentaciones de pago y control para movilizar la carga internamente.'
+                },
+                {
+                    type: 'text',
+                    badge: 'comunicación comercial',
+                    title: 'la consulta profesional al proveedor',
+                    instruction: 'redacta las preguntas mínimas que un importador serio debe enviar a un proveedor para no ser ignorado.',
+                    tutor: 'evita las consultas vagas y enfócate en demostrar que tienes un plan de negocio realizable,.',
+                    explanation: 'una consulta profesional debe incluir solicitudes de información técnica, garantías y planes de muestras concretos.',
+                    validation: (raw) => {
+                        const v = normalizar(raw);
+                        const roots = ['consult', 'profesional', 'inclu', 'solicitud', 'informac', 'tecnic', 'garanti', 'plan', 'muestr', 'concret'];
+                        return roots.filter(r => v.includes(r)).length >= 5;
+                    }
+                },
+                {
+                    type: 'traffic',
+                    badge: 'transparencia aduanera',
+                    title: 'veracidad del despacho',
+                    instruction: 'Marca las consecuencias de que los datos del despacho no coincidan con la factura comercial.',
+                    items: [
+                        { text: 'El sistema KITAPP corrige automáticamente los errores de carga.', color: 'red' },
+                        { text: 'La aduana puede considerar que hay una falta en la declaración.', color: 'green' },
+                        { text: 'El despacho debe reflejar fielmente todos los datos que caracterizan a los bienes.', color: 'green' },
+                        { text: 'El importador puede modificar el despacho libremente después de oficializado.', color: 'red' }
+                    ].sort(() => Math.random() - 0.5),
+                    tutor: 'la fidelidad de los datos volcados en el despacho es la base del control aduanero legal.',
+                    explanation: 'cualquier discrepancia entre los documentos y la declaración aduanera genera sanciones y bloqueos operativos.'
+                }
+            ],
+            practica: [
+                {
+                    type: 'checklist',
+                    badge: 'herramientas de gestión',
+                    title: 'funciones del sistema digital aduanero',
+                    instruction: 'identifica las utilidades que ofrece la plataforma informática interconectada para los usuarios de comercio exterior.',
+                    items: [
+                        { text: 'Realización de despachos digitales', correct: true },
+                        { text: 'Gestión de programas de maquila', correct: true },
+                        { text: 'Certificados de nacionalización', correct: true },
+                        { text: 'Impresión de etiquetas de marca', correct: false }
+                    ].sort(() => Math.random() - 0.5),
+                    tutor: 'busca las tareas exclusivas de los despachantes y entes reguladores en la plataforma.',
+                    explanation: 'la plataforma automatiza procedimientos aduaneros clave como los despachos y certificados oficiales.'
+                },
+                {
+                    type: 'text',
+                    badge: 'preparación técnica',
+                    title: 'el kit documental para el sistema',
+                    instruction: 'detalla los documentos necesarios que el despachante debe tener a mano antes de iniciar la carga en el sistema informático.',
+                    tutor: 'divide los documentos por su naturaleza (factura, lista de empaque, fletes, permisos),.',
+                    explanation: 'se requiere el set completo de documentos comerciales, de transporte y permisos especiales según la mercadería,.',
+                    validation: (raw) => {
+                        const v = normalizar(raw);
+                        const roots = ['requier', 'complet', 'document', 'comercial', 'transport', 'permis', 'especial', 'segun', 'mercader'];
+                        return roots.filter(r => v.includes(r)).length >= 5;
+                    }
+                },
+                {
+                    type: 'blanks',
+                    anyOrder: false,
+                    badge: 'flujo administrativo',
+                    title: 'interconexión de ventanillas únicas',
+                    instruction: 'Completar la frase<br><br>los organismos gubernamentales se enlazan mediante la ___ para regular el control de ingresos y la ___ para gestionar exportaciones.',
+                    blanks: ['VUI', 'VUE'],
+                    tutor: 'identifica las siglas de los sistemas que centralizan los permisos y regulaciones por rubro,.',
+                    explanation: 'la VUI y la VUE permiten la conexión entre aduanas y otros organismos para agilizar el control de mercaderías.'
+                },
+                {
+                    type: 'traffic',
+                    badge: 'procedimiento aduanero',
+                    title: 'oficialización del despacho',
+                    instruction: 'Marca el orden correcto para concretar la oficialización de una carga en el sistema aduanero.',
+                    items: [
+                        { text: 'Primero se debe depositar el dinero de tributos en la cuenta del sistema.', color: 'green' },
+                        { text: 'La carga de datos en el sistema se realiza antes de tener los documentos físicos.', color: 'red' },
+                        { text: 'El sistema asigna el canal de verificación inmediatamente después de oficializar.', color: 'green' },
+                        { text: 'El canal de verificación se puede elegir según la necesidad de la empresa.', color: 'red' }
+                    ].sort(() => Math.random() - 0.5),
+                    tutor: 'la secuencia de oficialización exige fondos disponibles y documentación completa para activar los canales de control,.',
+                    explanation: 'el proceso inicia con el depósito de fondos y la carga de datos para recibir la asignación aleatoria del canal.'
+                },
+                {
+                    type: 'text',
+                    badge: 'soporte institucional',
+                    title: 'convenios de cooperación tecnológica',
+                    instruction: 'explica cómo las cámaras y centros de importadores/industriales colaboran con el desarrollo del sistema informático.',
+                    tutor: 'analiza el rol de las entidades del sector privado en el mantenimiento tecnológico del sistema,.',
+                    explanation: 'el sector privado brinda respaldo y firma convenios para asegurar el crecimiento tecnológico sostenido de las herramientas digitales.',
+                    validation: (raw) => {
+                        const v = normalizar(raw);
+                        const roots = ['sector', 'privad', 'brind', 'respald', 'firm', 'conveni', 'asegur', 'crecimient', 'tecnologic', 'sostenid'];
+                        return roots.filter(r => v.includes(r)).length >= 5;
+                    }
+                },
+                {
+                    type: 'checklist',
+                    badge: 'roles y responsabilidades',
+                    title: 'usuarios del sistema interconectado',
+                    instruction: 'selecciona a los actores que se encuentran vinculados a través del sistema informático de ingresos tributarios.',
+                    items: [
+                        { text: 'Agentes de carga', correct: true },
+                        { text: 'Empresas aseguradoras', correct: true },
+                        { text: 'Depositarios de mercaderías', correct: true },
+                        { text: 'Consumidores finales de tiendas', correct: false }
+                    ].sort(() => Math.random() - 0.5),
+                    tutor: 'enfócate en los eslabones técnicos de la cadena logística y financiera del comercio exterior.',
+                    explanation: 'el sistema enlaza a transportistas, aseguradoras, bancos y depósitos para simplificar la logística integral.'
+                },
+                {
+                    type: 'text',
+                    badge: 'cumplimiento normativo',
+                    title: 'control documental en registro',
+                    instruction: 'describe el procedimiento que realiza el Departamento de Registro cuando un despacho sale con canal verde o naranja.',
+                    tutor: 'diferencia esta tarea de la verificación que se realiza directamente sobre la mercadería física.',
+                    explanation: 'en estos canales, se ejecuta exclusivamente el control e inspección de los documentos del despacho en el área de registro.',
+                    validation: (raw) => {
+                        const v = normalizar(raw);
+                        const roots = ['canal', 'ejecut', 'exclusivament', 'control', 'inspeccion', 'document', 'despach', 'are', 'registr'];
+                        return roots.filter(r => v.includes(r)).length >= 5;
+                    }
+                },
+                {
+                    type: 'traffic',
+                    badge: 'finanzas de aduana',
+                    title: 'canales de pago electrónico',
+                    instruction: 'Marca afirmaciones sobre la disposición del pago de tributos en el sistema actual.',
+                    items: [
+                        { text: 'El pago se puede realizar a través de una red de bancos estatales y privados.', color: 'green' },
+                        { text: 'El pago electrónico de tributos agiliza la liberación de la mercadería.', color: 'green' },
+                        { text: 'El pago de impuestos se puede realizar en efectivo directamente al inspector de aduana.', color: 'red' },
+                        { text: 'El sistema proporciona información estadística de los pagos realizados.', color: 'green' }
+                    ].sort(() => Math.random() - 0.5),
+                    tutor: 'la bancarización y digitalización de los pagos asegura transparencia y rapidez en la gestión de fondos.',
+                    explanation: 'la interconexión con entidades bancarias facilita el pago electrónico y la provisión de datos estadísticos oficiales.'
+                },
+                {
+                    type: 'text',
+                    badge: 'integridad de datos',
+                    title: 'importancia de la posición arancelaria',
+                    instruction: 'detalla por qué la posición arancelaria es un dato crítico que debe figurar tanto en documentos comerciales como en el despacho.',
+                    tutor: 'asocia este código numérico con el cálculo de impuestos y los beneficios de desgravación.',
+                    explanation: 'este código determina la tasa de impuestos a pagar y la viabilidad de aplicar acuerdos de desgravación arancelaria.',
+                    validation: (raw) => {
+                        const v = normalizar(raw);
+                        const roots = ['codig', 'determin', 'tas', 'impuest', 'pag', 'viabilidad', 'aplic', 'acuerd', 'desgravac', 'arancelari'];
+                        return roots.filter(r => v.includes(r)).length >= 5;
+                    }
+                },
+                {
+                    type: 'checklist',
+                    badge: 'secuencia operativa final',
+                    title: 'de la cotización al arribo',
+                    instruction: 'ordena los documentos clave en el orden cronológico en que aparecen durante una importación exitosa.',
+                    items: [
+                        { text: 'Cotización formal', correct: true },
+                        { text: 'Factura Proforma', correct: true },
+                        { text: 'Factura Comercial', correct: true },
+                        { text: 'Despacho de Importación', correct: true }
+                    ].sort(() => Math.random() - 0.5),
+                    tutor: 'sigue el camino desde la negociación inicial hasta la oficialización ante la aduana,,.',
+                    explanation: 'el flujo documental inicia con la cotización y proforma, siguiendo con la factura comercial hasta la declaración aduanera final.'
+                }
+            ]
+        };
+
+        let currentModule = '';
+        let currentIndex = 0;
+        let attemptCount = 0;
+        let lastAudioModule = null;
+
+        // ===== MAPEO DE MÓDULOS A AUDIOS =====
+        const moduloAudioMap = {
+            'sintesis': 'mensaje1',
+            'analisis': 'mensaje2',
+            'escenarios': 'mensaje3',
+            'practica': 'mensaje4'
+        };
+
+        function startModule(id) {
+            playSound('click');
+            currentModule = id;
+            currentIndex = 0;
+            attemptCount = 0;
+            lastAudioModule = id;
+
+            // Reproducir el audio del módulo correspondiente
+            const audioKey = moduloAudioMap[id];
+            if (audioKey) {
+                playAudio(audioKey);
+            }
+
+            document.getElementById('selectionScreen').style.display = 'none';
+            document.getElementById('activityScreen').classList.add('active');
+
+            setTimeout(loadActivity, 300);
+        }
+
+        function loadActivity() {
+            attemptCount = 0;
+
+            if (currentIndex >= modules[currentModule].length) {
+                // Reproducir "lolograste.mp3" al terminar TODAS las preguntas
+                playAudio('lolograste');
+                playSound('success');
+                alert('¡Excelente! Completaste este bloque.');
+                setTimeout(() => {
+                    location.reload();
+                }, 2000);
+                return;
+            }
+
+            const data = modules[currentModule][currentIndex];
+            const container = document.getElementById('activityContainer');
+
+            const msg = `Pregunta ${currentIndex + 1} de ${modules[currentModule].length}: ${data.tutor}`;
+            document.getElementById('tutorMessage').innerText = msg;
+
+            let html = `<span class="act-badge">${data.badge}</span>
+                        <h2 class="act-title">${data.title}</h2>
+                        <p class="act-instruction">${data.instruction}</p>`;
+
+            if (data.type === 'text') {
+                html += `<textarea id="txtInput" class="student-input" placeholder="Escribe tu respuesta con tus palabras..."></textarea>`;
+            } else if (data.type === 'blanks') {
+                html += `<div style="font-size:1.2rem; line-height:2.5;">`;
+                data.blanks.forEach((b, i) => {
+                    html += `${i + 1}. <input type="text" class="fill-input" data-ans="${b}"> <br>`;
+                });
+                html += `</div>`;
+            } else if (data.type === 'traffic') {
+                data.items.forEach((item, i) => {
+                    html += `<div class="traffic-row" id="row-${i}">
+                                <span>${item.text}</span>
+                                <div style="display:flex; gap:10px;">
+                                    <div class="traffic-btn bg-green" onclick="selTraffic(${i}, 'green')"></div>
+                                    <div class="traffic-btn bg-yellow" onclick="selTraffic(${i}, 'yellow')"></div>
+                                    <div class="traffic-btn bg-red" onclick="selTraffic(${i}, 'red')"></div>
+                                </div>
+                            </div>`;
+                });
+            } else if (data.type === 'checklist') {
+                data.items.forEach((item) => {
+                    html += `<div class="checklist-item" onclick="toggleCheck(this)" data-correct="${item.correct}">
+                                <div class="check-box"></div>
+                                <span>${item.text}</span>
+                            </div>`;
+                });
+            }
+
+            html += `<div id="feedback" class="feedback-area"></div>
+                     <button id="btnCheck" class="btn-action" onclick="validate()">Verificar respuesta</button>
+                     <button class="btn-action btn-back" onclick="location.reload()">Salir al menú</button>`;
+
+            container.innerHTML = html;
+            wireUiSounds();
+        }
+
+        let trafficAns = {};
+
+        function selTraffic(idx, color) {
+            trafficAns[idx] = color;
+            const row = document.getElementById(`row-${idx}`);
+            row.querySelectorAll('.traffic-btn').forEach(b => b.classList.remove('active'));
+            row.querySelector(`.bg-${color}`).classList.add('active');
+            playSound('click');
+        }
+
+        function toggleCheck(el) {
+            el.classList.toggle('selected');
+            el.querySelector('.check-box').innerText = el.classList.contains('selected') ? '✓' : '';
+
+            if (el.classList.contains('selected')) {
+                el.style.borderColor = 'var(--ficde-naranja)';
+                el.querySelector('.check-box').style.background = 'var(--ficde-naranja)';
+                el.querySelector('.check-box').style.borderColor = 'var(--ficde-naranja)';
+                el.querySelector('.check-box').style.color = 'white';
+            } else {
+                el.style.borderColor = 'transparent';
+                el.querySelector('.check-box').style.background = 'transparent';
+                el.querySelector('.check-box').style.borderColor = '#ccc';
+            }
+
+            playSound('click');
+        }
+
+        function validate() {
+            const data = modules[currentModule][currentIndex];
+            const feedback = document.getElementById('feedback');
+            let isCorrect = false;
+
+            if (data.type === 'text') {
+                const val = document.getElementById('txtInput').value;
+                isCorrect = data.validation(val);
+            } else if (data.type === 'blanks') {
+                const inputs = document.querySelectorAll('.fill-input');
+                let hits = 0;
+                let usedAnswers = [];
+                inputs.forEach(inp => {
+                    const v = normalizar(inp.value.trim());
+                    if (v.length > 0) {
+                        if (data.anyOrder) {
+                            const matchedIdx = data.blanks.findIndex((ans, idx) => {
+                                if (usedAnswers.includes(idx)) return false;
+                                const normAns = normalizar(ans.trim());
+                                return (normAns === v || (v.length > 1 && normAns.startsWith(v.slice(0, Math.max(2, Math.min(v.length, normAns.length))))));
+                            });
+                            if (matchedIdx !== -1) {
+                                hits++;
+                                usedAnswers.push(matchedIdx);
+                            }
+                        } else {
+                            const ans = normalizar(inp.dataset.ans.trim());
+                            if (ans === v || (v.length > 1 && ans.startsWith(v.slice(0, Math.max(2, Math.min(v.length, ans.length)))))) {
+                                hits++;
+                            }
+                        }
+                    }
+                });
+                isCorrect = (hits === data.blanks.length);
+            } else if (data.type === 'traffic') {
+                let hits = 0;
+                data.items.forEach((item, i) => { if (trafficAns[i] === item.color) hits++; });
+                isCorrect = (hits === data.items.length);
+            } else if (data.type === 'checklist') {
+                let correct = true;
+                document.querySelectorAll('.checklist-item').forEach(item => {
+                    const sel = item.classList.contains('selected');
+                    const should = item.dataset.correct === 'true';
+                    if (sel !== should) correct = false;
+                });
+                isCorrect = correct;
+            }
+
+            feedback.style.display = 'block';
+
+            if (isCorrect) {
+                playAudio('correcto');
+                playSound('success');
+                feedback.className = 'feedback-area feedback-success';
+                feedback.innerHTML = `<strong>¡Muy bien!</strong><br>${data.explanation}`;
+                document.getElementById('btnCheck').innerText = 'Siguiente pregunta →';
+                document.getElementById('btnCheck').onclick = () => { currentIndex++; loadActivity(); };
+            } else {
+                attemptCount++;
+
+                if (attemptCount < 2) {
+                    playAudio('error1');
+                    feedback.className = 'feedback-area feedback-retry';
+                    feedback.innerHTML = `<strong>Buen intento.</strong> Revisá tu respuesta. Pista: ${data.tutor}`;
+                } else {
+                    playAudio('error2');
+                    feedback.className = 'feedback-area feedback-fail';
+                    feedback.innerHTML = `<strong>No pasa nada, aprendamos juntos:</strong><br>${data.explanation}`;
+                    document.getElementById('btnCheck').innerText = 'Entendido, continuar →';
+                    document.getElementById('btnCheck').onclick = () => { currentIndex++; loadActivity(); };
+                }
+            }
+        }
+
+        function replayTutorMessage() {
+            // Replay del último audio de módulo reproducido
+            if (lastAudioModule) {
+                const audioKey = moduloAudioMap[lastAudioModule];
+                if (audioKey) {
+                    playAudio(audioKey);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
